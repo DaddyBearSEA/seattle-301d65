@@ -1,20 +1,20 @@
 'use strict';
 
-let names = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
+const names = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'usb', 'water-can', 'wine-glass'];
 
-let leftImage = document.getElementById('left');
-let centerImage = document.getElementById('center');
-let rightImage = document.getElementById('right');
+const leftImage = document.getElementById('left');
+const centerImage = document.getElementById('center');
+const rightImage = document.getElementById('right');
 
 let allProducts = [];
-let container = document.getElementById('image_container');
-let viewed = [];
-let labels = [];
-let pics = [leftImage, centerImage, rightImage];
-let list = document.getElementById('productlist');
+const container = document.getElementById('image_container');
+const viewed = [];
+const labels = [];
+const pics = [leftImage, centerImage, rightImage];
+const list = document.getElementById('productlist');
 let totalClicks = 0;
-let views = [];
-let votes = [];
+const views = [];
+const votes = [];
 
 function Product(name) {
   this.name = name;
@@ -30,20 +30,22 @@ function makeRandom() {
 
 function displayPics(){
   while(viewed.length < 6){
-    var rando = makeRandom();
+    const rando = makeRandom();
+    console.log("this is rando", + rando)
     while(!viewed.includes(rando)){
       viewed.push(rando);
     }
   }
-  console.log(rando);
+  // console.log(rando);  Rando is local and therefore can't be called outside of the function
+
   // TODO: In a sentence or two, explain why the previous line of code threw an error when we changed the variable declaration from `var to `let`.
   // PUT YOUR RESPONSE IN THIS COMMENT
-  // ANSWER: the variable rando needs to be reassigned and let will not allow that to happen.  Let is more restrictive when used with a varaible. Var allows the variable to be reassigned.
+  // ANSWER: the variable rando needs to be reassigned and let will not allow that to happen.  Let is more restrictive when used with a varaible. Var allows the variable to be reassigned and used outside of the local scope.
 
   console.log(viewed);
 
   for (let i = 0; i < 3; i++){
-    let temp = viewed.shift();
+    const temp = viewed.shift();
     pics[i].src = allProducts[temp].path;
     pics[i].id = allProducts[temp].name;
     allProducts[temp].views += 1;
@@ -74,7 +76,7 @@ function handleClick(event) {
 
 function showList() {
   for(let i = 0; i < allProducts.length; i++) {
-    let liEl = document.createElement('li');
+    const liEl = document.createElement('li');
     liEl.textContent = allProducts[i].name + ' has ' + allProducts[i].votes + ' votes in ' + allProducts[i].views + ' views';
     list.appendChild(liEl);
   }
@@ -90,7 +92,7 @@ function makeChartData(){
 
 function makeChart(){
   makeChartData();
-  let ctx = document.getElementById('chartypants').getContext('2d');
+  const ctx = document.getElementById('chartypants').getContext('2d');
   new Chart(ctx, { //eslint-disable-line
     type: 'bar',
     data: {
@@ -130,7 +132,7 @@ if(localStorage.busmall){
   allProducts = JSON.parse(localStorage.busmall);
 } else {
   console.log('There is no local storage data; initialize app by creating instances');
-  for(let i = 0; i < names.length; i++) {
+  for(const i = 0; i < names.length; i++) {
     new Product(names[i]);
   }
 }
